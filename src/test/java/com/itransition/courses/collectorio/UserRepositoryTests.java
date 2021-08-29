@@ -8,7 +8,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
+
+import java.util.NoSuchElementException;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -19,7 +23,10 @@ public class UserRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository repo;
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Test
     public void testCreateUser() {
@@ -27,11 +34,40 @@ public class UserRepositoryTests {
         user.setEmail("sskibin@gmail.com");
         user.setPassword("skibin2020");
         user.setUserName("skibin2021");
-        user.setRoles("ROLE_USER");
 
-        User savedUser = repo.save(user);
+        User savedUser = userRepository.save(user);
         User existUser = entityManager.find(User.class, savedUser.getId());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
+    }
+
+    @Test
+    public void testAddRoleToNewUser() {
+        User user = new User();
+        user.setEmail("ss@gmail.com");
+        user.setPassword(new BCryptPasswordEncoder().encode("123"));
+        user.setUserName("ss");
+        user.setEnabled(true);
+
+        Role role = roleRepository.findByName("USER").orElseThrow(NoSuchElementException::new);
+        user.addRole(role);
+
+        User savedUser = userRepository.save(user);
+        User existUser = entityManager.find(User.class, savedUser.getId());
+
+        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
+        assertThat(user.getRoles()).isEqualTo(existUser.getRoles());
+    }
+
+    @Test
+    public void testAddRoleToExistingUser() {
+        String userEmail = "ss@gmail.com";
+        User user = userRepository.findByEmail(userEmail).orElseThrow(NoSuchElementException::new);
+        Role role = roleRepository.findByName("ADMIN").orElseThrow(NoSuchElementException::new);
+        user.addRole(role);
+
+        User savedUser = userRepository.save(user);
+        assertThat(savedUser.getRoles().size()).isEqualTo(2);
+        assertThat(savedUser.getRoles()).contains(role);
     }
 }

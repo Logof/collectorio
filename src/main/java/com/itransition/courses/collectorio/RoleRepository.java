@@ -6,9 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    @Query("SELECT u FROM User u WHERE u.email = :email")
-    Optional<User> findByEmail(@Param("email") String email);
-
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    @Query("SELECT r FROM Role r WHERE r.name = ?1")
+    Optional<Role> findByName(@Param("name") String name);
 }

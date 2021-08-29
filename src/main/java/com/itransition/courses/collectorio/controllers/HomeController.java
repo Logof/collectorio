@@ -1,7 +1,6 @@
 package com.itransition.courses.collectorio.controllers;
 
-import com.itransition.courses.collectorio.User;
-import com.itransition.courses.collectorio.UserRepository;
+import com.itransition.courses.collectorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -9,11 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+
 @Controller
 public class HomeController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping("/")
     public String main() {
@@ -40,8 +47,13 @@ public class HomeController {
     public String processRegistration(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
+
         user.setPassword(encodedPassword);
-        user.setRoles("USER" + ", ");
+        user.setEnabled(true);
+
+        Role role = roleRepository.findByName("USER").orElseThrow(NoSuchElementException::new);
+        user.addRole(role);
+
         userRepository.save(user);
 
         return "register_success";

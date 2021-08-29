@@ -1,0 +1,31 @@
+package com.itransition.courses.collectorio;
+
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(value = false)
+public class RoleRepositoryTests {
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Test
+    public void testCreateRoles() {
+        Role roleUser = new Role("USER");
+        Role roleAdmin = new Role("ADMIN");
+
+        roleRepository.saveAll(Arrays.asList(roleAdmin, roleUser));
+        List<Role> listRoles = roleRepository.findAll();
+
+        assertThat(listRoles.size()).isEqualTo(2);
+    }
+}
