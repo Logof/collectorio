@@ -2,24 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" type="image/png" href="/fresh-bootstrap-table-master/assets/img/favicon.ico">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <title>Admin Panel</title>
+    <title class="text-opacity-100">Admin Panel</title>
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
 
-    <link href="/fresh-bootstrap-table-master/assets/css/bootstrap.css" rel="stylesheet"/>
-    <link href="/fresh-bootstrap-table-master/assets/css/fresh-bootstrap-table.css" rel="stylesheet"/>
-    <link href="/fresh-bootstrap-table-master/assets/css/demo.css" rel="stylesheet"/>
-
+    <link href="\fresh-bootstrap-table-master\assets\css\bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="\fresh-bootstrap-table-master\assets\css\fresh-bootstrap-table.css" type="text/css" rel="stylesheet" />
+    <link href="\fresh-bootstrap-table-master\assets\css\demo.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="\webjars\bootstrap\5.1.0\css\bootstrap.min.css" />
     <!--     Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="\fresh-bootstrap-table-master\assets\js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="\fresh-bootstrap-table-master\assets\js/bootstrap.js"></script>
+    <script type="text/javascript" src="\fresh-bootstrap-table-master\assets\js/bootstrap-table.js"></script>
 
 </head>
 <body>
@@ -109,10 +109,6 @@
 
 
         window.operateEvents = {
-            'click .like': function (e, value, row, index) {
-                alert('You click like icon, row: ' + JSON.stringify(row));
-                console.log(value, row, index);
-            },
             'click .edit': function (e, value, row, index) {
                 alert('You click edit icon, row: ' + JSON.stringify(row));
                 console.log(value, row, index);
@@ -135,9 +131,6 @@
 
     function operateFormatter(value, row, index) {
         return [
-            '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
-            '<i class="fa fa-heart"></i>',
-            '</a>',
             '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
             '<i class="fa fa-edit"></i>',
             '</a>',

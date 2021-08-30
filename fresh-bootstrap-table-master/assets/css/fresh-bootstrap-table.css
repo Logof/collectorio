@@ -1185,9 +1185,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 .fresh-table.toolbar-color-blue .fixed-table-toolbar {
   background: #4087ea;
-  background: -moz-radial-gradient(center, ellipse cover, #533ce1 0%, #4087ea 100%);
+  background: -moz-radial-gradient(#533ce1 0%, #4087ea 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #533ce1), color-stop(100%, #4087ea));
+  background: -webkit-gradient(radial, 100%, color-stop(0%, #533ce1), color-stop(100%, #4087ea));
   /* Chrome,Safari4+ */
   background: -webkit-radial-gradient(center, ellipse cover, #533ce1 0%, #4087ea 100%);
   /* Chrome10+,Safari5.1+ */
@@ -1249,7 +1249,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 .fresh-table.toolbar-color-red .fixed-table-toolbar {
   background: #ED362C;
-  background: -moz-radial-gradient(center, ellipse cover, #C51E1B 0%, #ED362C 100%);
+  background: -moz-radial-gradient(closest-side, ellipse cover, #C51E1B 0%, #ED362C 100%);
   /* FF3.6+ */
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #C51E1B), color-stop(100%, #ED362C));
   /* Chrome,Safari4+ */
