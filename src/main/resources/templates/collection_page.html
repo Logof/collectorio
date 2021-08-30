@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Collection Page</title>
+    <link rel="stylesheet" type="text/css" href="\webjars\bootstrap\5.1.0\css\bootstrap.min.css"/>
+</head>
+<body>
+<div class="ui-menu-item-wrapper">
+    <div class="container text-center m-lg-2">
+        <div class="row">
+                <div class="description text-center">
+                    <h2> Collection </h2>
+                </div>
+                    <table class="table-bordered table-striped text-center d-lg-table">
+                        <thead>
+                        <tr>
+                            <th data-field="id">ID</th>
+                            <th data-field="name">Name</th>
+                            <th data-field="author">Author</th>
+                            <th data-field="description">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${collection.id}">1</td>
+                            <td th:text="${collection.name}">email</td>
+                            <td th:text="${collection.author.getUserName()}">Author</td>
+                            <td th:text="${collection.description}">Description</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
