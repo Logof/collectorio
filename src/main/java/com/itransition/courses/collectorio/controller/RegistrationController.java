@@ -11,25 +11,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class HomeController {
+public class RegistrationController {
 
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/")
-    public String main() {
-        return "main";
+    @GetMapping("/user/register")
+    public String showRegistrationForm(Model model){
+        model.addAttribute("user", new User());
+        return "signup_form";
     }
 
-    @GetMapping("/user")
-    public String user() {
-        return "user";
-    }
+    @PostMapping("/process_register")
+    public String processRegistration(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
 
-    @GetMapping("/admin")
-    public String admin(Model model) {
-        model.addAttribute("users", userRepository.findAll());
-        return "admin";
-    }
+        user.setPassword(encodedPassword);
+        user.setEnabled(true);
 
+        Role role = Role.USER;
+        user.addRole(role);
+
+        userRepository.save(user);
+
+        return "register_success";
+    }
 }

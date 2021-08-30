@@ -12,6 +12,9 @@ public class Collection {
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @OneToOne
     private User author;
 
