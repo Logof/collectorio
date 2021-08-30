@@ -2,13 +2,15 @@ package com.itransition.courses.collectorio;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.itransition.courses.collectorio.entity.Role;
+import com.itransition.courses.collectorio.entity.User;
+import com.itransition.courses.collectorio.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
@@ -24,9 +26,6 @@ public class UserRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Test
     public void testCreateUser() {
@@ -49,7 +48,7 @@ public class UserRepositoryTests {
         user.setUserName("ss");
         user.setEnabled(true);
 
-        Role role = roleRepository.findByName("USER").orElseThrow(NoSuchElementException::new);
+        Role role = Role.USER;
         user.addRole(role);
 
         User savedUser = userRepository.save(user);
@@ -63,7 +62,7 @@ public class UserRepositoryTests {
     public void testAddRoleToExistingUser() {
         String userEmail = "ss@gmail.com";
         User user = userRepository.findByEmail(userEmail).orElseThrow(NoSuchElementException::new);
-        Role role = roleRepository.findByName("ADMIN").orElseThrow(NoSuchElementException::new);
+        Role role = Role.ADMIN;
         user.addRole(role);
 
         User savedUser = userRepository.save(user);

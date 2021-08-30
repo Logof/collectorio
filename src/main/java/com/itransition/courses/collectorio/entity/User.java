@@ -1,4 +1,6 @@
-package com.itransition.courses.collectorio;
+package com.itransition.courses.collectorio.entity;
+
+import com.itransition.courses.collectorio.PasswordMatches;
 
 import javax.persistence.*;
 import java.util.*;
@@ -27,13 +29,9 @@ public class User {
     @Column(nullable = false)
     private Boolean enabled;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
     public Set<Role> getRoles() {

@@ -1,5 +1,6 @@
 package com.itransition.courses.collectorio;
 
+import com.itransition.courses.collectorio.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ public class CustomUserDetails implements UserDetails {
         password = user.getPassword();
         userName = user.getUserName();
         authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
     }
 

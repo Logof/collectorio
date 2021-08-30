@@ -1,5 +1,6 @@
-package com.itransition.courses.collectorio;
+package com.itransition.courses.collectorio.repository;
 
+import com.itransition.courses.collectorio.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

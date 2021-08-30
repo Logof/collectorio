@@ -1,6 +1,6 @@
-package com.itransition.courses.collectorio;
+package com.itransition.courses.collectorio.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itransition.courses.collectorio.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,12 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    DataSource dataSource;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -48,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                    .usernameParameter("email")
+                    .loginPage("/login")
                     .defaultSuccessUrl("/user")
                     .permitAll()
                 .and()

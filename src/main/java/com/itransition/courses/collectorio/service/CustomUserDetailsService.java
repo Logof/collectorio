@@ -1,5 +1,8 @@
-package com.itransition.courses.collectorio;
+package com.itransition.courses.collectorio.service;
 
+import com.itransition.courses.collectorio.CustomUserDetails;
+import com.itransition.courses.collectorio.entity.User;
+import com.itransition.courses.collectorio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

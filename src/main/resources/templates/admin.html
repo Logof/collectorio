@@ -1,16 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home page</title>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.0.2/css/bootstrap.min.css"/>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="/fresh-bootstrap-table-master/assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <title>Admin Panel</title>
+
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+
+    <link href="/fresh-bootstrap-table-master/assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/fresh-bootstrap-table-master/assets/css/fresh-bootstrap-table.css" rel="stylesheet"/>
+    <link href="/fresh-bootstrap-table-master/assets/css/demo.css" rel="stylesheet"/>
+
+    <!--     Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/fresh-bootstrap-table-master/assets/js/bootstrap-table.js"></script>
+
 </head>
 <body>
-<div class="container text-center text-dark">
-    <div>
-        <h1>Home Page</h1>
-        <h2>Admin</h2>
+
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="description">
+                    <h2>Admin Panel</h2>
+                </div>
+
+                <div class="fresh-table full-color-blue">
+                    <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+                            Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+                    -->
+                    <div class="toolbar">
+                        <button id="alertBtn" class="btn btn-default">Alert</button>
+                    </div>
+
+                    <table id="fresh-table" class="table">
+                        <thead>
+                        <tr>
+                            <th data-field="id">ID</th>
+                            <th data-field="email">Email</th>
+                            <th data-field="user_name">UserName</th>
+                            <th data-field="roles">Roles</th>
+                            <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}">1</td>
+                            <td th:text="${user.email}">email</td>
+                            <td th:text="${user.userName}">userName</td>
+                            <td><span th:each="role, iterStat : ${user.roles}"
+                                      th:text="${role.name} + ${!iterStat.last ? ', ' : ''}">User</span></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var $table = $('#fresh-table'),
+        $alertBtn = $('#alertBtn'),
+        full_screen = false;
+
+    $().ready(function () {
+        $table.bootstrapTable({
+            toolbar: ".toolbar",
+
+            showRefresh: true,
+            search: true,
+            showToggle: true,
+            showColumns: true,
+            pagination: true,
+            striped: true,
+            pageSize: 8,
+            pageList: [8, 10, 25, 50, 100],
+
+            formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                //do nothing here, we don't want to show the text "showing x of y from..."
+            },
+            formatRecordsPerPage: function (pageNumber) {
+                return pageNumber + " rows visible";
+            },
+            icons: {
+                refresh: 'fa fa-refresh',
+                toggle: 'fa fa-th-list',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle'
+            }
+        });
+
+
+        $(window).resize(function () {
+            $table.bootstrapTable('resetView');
+        });
+
+
+        window.operateEvents = {
+            'click .like': function (e, value, row, index) {
+                alert('You click like icon, row: ' + JSON.stringify(row));
+                console.log(value, row, index);
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit icon, row: ' + JSON.stringify(row));
+                console.log(value, row, index);
+            },
+            'click .remove': function (e, value, row, index) {
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                });
+
+            }
+        };
+
+        $alertBtn.click(function () {
+            alert("You pressed on Alert");
+        });
+
+    });
+
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+            '<i class="fa fa-heart"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+            '<i class="fa fa-edit"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+            '<i class="fa fa-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+    </script>
 </html>
