@@ -2,17 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home page</title>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.0.2/css/bootstrap.min.css"/>
+    <title th:text="${title}" />
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.1.0/css/bootstrap.min.css"/>
 </head>
 <body>
-<div class="container text-center text-dark">
-    <div>
-        <h1>Empty Home Page</h1>
-        <h2>Please login using link below </h2>
-        <div class="row-cols-auto mb-3"><h3><a th:href="@{/login}">*Login*</a></h3></div>
-
+    <div class="container py-3">
+        <header th:insert="blocks/header :: header"></header>
+        <main>
+            <div class="container text-center text-dark">
+                <div>
+                    <h1>Empty Home Page</h1>
+                    <h2>Please login using link below </h2>
+                    <div class="row-cols-auto mb-3">
+                        <h3><a th:href="@{/login}">*Login*</a></h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="text-muted py-5" th:insert="blocks/footer :: footer"></footer>
     </div>
-</div>
 </body>
 </html>
